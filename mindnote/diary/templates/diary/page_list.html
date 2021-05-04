@@ -1,0 +1,20 @@
+{% extends './base.html' %}
+
+{% block diary_page %}
+    <h2>일기 목록 페이지</h2>
+    <ul>
+        {% for object in object_list %}
+            <li>
+                <div class='date'>
+                    <span>{{object.dt_created|date:"d"}}</span>
+                    <p>{{object.dt_created|date:"M"}}</p>
+                </div>
+                <h2>{{object.title}}</h2>
+                <div class='score'>
+                    <p>감정점수</p>
+                    <span>{{object.score}}점</span>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock diary_page %}
