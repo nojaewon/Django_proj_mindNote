@@ -9,7 +9,7 @@
                     <span>{{object.dt_created|date:"d"}}</span>
                     <p>{{object.dt_created|date:"M"}}</p>
                 </div>
-                <h2>{{object.title}}</h2>
+                <h2><a href = {% url 'page-detail' object.id %}>{{object.title}}</a></h2>
                 <div class='score'>
                     <p>감정점수</p>
                     <span>{{object.score}}점</span>
