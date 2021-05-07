@@ -18,14 +18,8 @@ def info(request):
 
 def page_create(request):
     if request.method == 'POST':
-        new_page = Page(
-            title = request.POST['title'],
-            content = request.POST['content'],
-            feeling = request.POST['feeling'],
-            score = request.POST['score'],
-            dt_created = request.POST['dt_created']
-        )
-        new_page.save()
+        new_from = PageForm(request.POST)
+        new_page = new_form.save()
         return redirect('page-detail', page_id = new_page.id)
     else:
         form = PageForm()
