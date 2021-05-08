@@ -18,10 +18,11 @@ def info(request):
 
 def page_create(request):
     if request.method == 'POST':
-        new_from = PageForm(request.POST)
-        new_page = new_form.save()
-        return redirect('page-detail', page_id = new_page.id)
+        new_form = PageForm(request.POST)
+        if new_form.is_valid():
+            new_page = new_form.save()
+            return redirect('page-detail', page_id = new_page.id)
     else:
-        form = PageForm()
-        context = {'form': form}
-        return render(request, 'diary/page_form.html', context) 
+        new_form = PageForm()
+    context = {'form': new_form}
+    return render(request, 'diary/page_form.html', context) 
