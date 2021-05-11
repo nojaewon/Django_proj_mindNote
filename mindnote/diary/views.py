@@ -38,3 +38,18 @@ def page_update(request, page_id):
     else:
         new_form = PageForm(instance=page)
     return render(request,'diary/page_form.html',{'form':new_form})
+
+
+def page_delete(request, page_id):
+    page = Page.objects.get(id = page_id)
+    if request.method == 'POST':
+        page.delete()
+        return redirect('page-list')
+    else:
+        context = {'form': page }
+        return render(request,'diary/page_confirm_delete.html', context)
+
+    return redirect('page-list')
+
+def index(request):
+    return render(request,'diary/index.html')
