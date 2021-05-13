@@ -4,21 +4,32 @@
     <div class="wrap-note">
         <div class="note">         
             <div class="note-list">
-                <ul>
-                    {% for obj in object_list %}
-                    <li>
-                        <a href="{% url 'page-detail' obj.id %}">
-                        <div class="date">
-                            <span>{{obj.dt_created|date:"d - M"}}</span>
+                {% if object_list %}
+                    <ul>
+                        {% for obj in object_list %}
+                        <li>
+                            <a href="{% url 'page-detail' obj.id %}">
+                            <div class="date">
+                                <span>{{obj.dt_created|date:"d - M"}}</span>
+                            </div>
+                            <h2>{{obj.title}}</h2>
+                            <div class="score">
+                                <p>감정점수</p>
+                                <span>{{obj.score}}점</span>
+                            </div></a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <div class="wrap-default">
+                        <div class="default">
+                            <div class="default-box">
+                                <p>"오늘 하루는 어땠나요? 당신의 하루를 들려주세요"</p>
+                                <a href="{% url 'page-create' %}">일기쓰기</a>
+                            </div>
                         </div>
-                        <h2>{{obj.title}}</h2>
-                        <div class="score">
-                            <p>감정점수</p>
-                            <span>{{obj.score}}점</span>
-                        </div></a>
-                    </li>
-                    {% endfor %}
-                </ul>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>
