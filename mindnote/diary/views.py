@@ -1,21 +1,28 @@
 from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
-from django.views.generic import CreateView
+from django.views.generic import CreateView, ListView
 from django.urls import reverse
 from .models import Page
 from .forms import PageForm
 
-# Create your views here.
-def page_list(request):
-    object_list = Page.objects.all()
-    paginator = Paginator(object_list, 8)
-    curr_page_number = request.GET.get('page')
+# def page_list(request):
+#     object_list = Page.objects.all()
+#     paginator = Paginator(object_list, 8)
+#     curr_page_number = request.GET.get('page')
 
-    if curr_page_number is None:
-        curr_page_number = 1
+#     if curr_page_number is None:
+#         curr_page_number = 1
     
-    page = paginator.page(curr_page_number)
-    return render(request, 'diary/page_list.html',{'page':page})
+#     page = paginator.page(curr_page_number)
+#     return render(request, 'diary/page_list.html',{'page':page})
+
+class PageListView(ListView):
+    model = Page
+    template_name = 'diary/page_list.html'
+    conetext_object_name = 'obj'
+    ordering = ['-dt_created']
+    paginate_by = 8
+    page_kwarg = 'page'
 
 def page_detail(request,page_id):
     page_obj = Page.objects.get(id=page_id)
@@ -24,17 +31,6 @@ def page_detail(request,page_id):
 
 def info(request):
     return render(request, 'diary/info.html')
-
-# def page_create(request):
-#     if request.method == 'POST':
-#         new_form = PageForm(request.POST)
-#         if new_form.is_valid():
-#             new_page = new_form.save()
-#             return redirect('page-detail', page_id = new_page.id)
-#     else:
-#         new_form = PageForm()
-#     context = {'form': new_form}
-#     return render(request, 'diary/page_form.html', context) 
 
 class PageCreateView(CreateView):
     model = Page
