@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
-from django.views.generic import CreateView, ListView
+from django.views.generic import CreateView, ListView, DetailView
 from django.urls import reverse
 from .models import Page
 from .forms import PageForm
@@ -24,10 +24,16 @@ class PageListView(ListView):
     paginate_by = 8
     page_kwarg = 'page'
 
-def page_detail(request,page_id):
-    page_obj = Page.objects.get(id=page_id)
-    context = {'object' : page_obj}
-    return render(request, 'diary/page_detail.html',context)
+# def page_detail(request,page_id):
+#     page_obj = Page.objects.get(id=page_id)
+#     context = {'object' : page_obj}
+#     return render(request, 'diary/page_detail.html',context)
+
+class PageDetailView(DetailView):
+    model = Page
+    template_name = 'diary/page_detail.html'
+    pk_url_kwarg = 'page_id'
+    context_object_name = 'object'
 
 def info(request):
     return render(request, 'diary/info.html')
